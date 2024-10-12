@@ -1,0 +1,25 @@
+name: Code Reviewer
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - review_requested
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  code_review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Review
+        uses: pivanov/code-review@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_MODEL: "gpt-4-mini"
+          exclude: "**/*.json, **/*.md, **/*.lock, **/dist/**, **/node_modules/**, **/.github/**, **/.vscode/**"
