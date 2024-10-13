@@ -1,16 +1,19 @@
 name: Code Reviewer
 
 on:
-  issue_comment:
-    types: [created]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - review_requested
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  review:
-    if: startsWith(github.event.comment.body, '/review')
+  code_review:
     runs-on: ubuntu-latest
     steps:
       - name: Code Review
